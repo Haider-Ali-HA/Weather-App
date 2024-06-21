@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import humidityImg from "../assets/humidity.png";
-import windImg from "../assets/wind.png";
+import humidityImg from "../assets/humidity.svg";
+import windImg from "../assets/wind.svg";
 import { FiSearch } from "react-icons/fi";
 
 //Import Weather Icons
-import clearImg from "../assets/clear.png";
-import fewCloudsImg from "../assets/fewCloud.png";
-import rainImg from "../assets/rain.png";
-import snowImg from "../assets/snow.png";
-import thunderStormImg from "../assets/thunderStorm.png";
-import brokenCloudsImg from "../assets/brokenClouds.png";
-import scatteredCloudsImg from "../assets/scatteredClouds.png";
-import showerRainImg from "../assets/showerRain.png";
+import clearImg from "../assets/clear.svg";
+import fewCloudsImg from "../assets/fewCloud.svg";
+import rainImg from "../assets/rain.svg";
+import snowImg from "../assets/snow.svg";
+import thunderStormImg from "../assets/thunderStorm.svg";
+import brokenCloudsImg from "../assets/brokenClouds.svg";
+import scatteredCloudsImg from "../assets/scatteredClouds.svg";
+import showerRainImg from "../assets/showerRain.svg";
 
 // Import your background images
 import clearBg from "../assets/bgImage/clearSky.svg";
@@ -25,8 +25,11 @@ import snowBg from "../assets/bgImage/snow.svg";
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(thunderStormBg);
+
+  // For city search
   const inputRef = useRef();
-  const [backgroundImage, setBackgroundImage] = useState(thunderStormBg); // Set default background image
+
   const weatherIcons = {
     "01d": clearImg,
     "01n": clearImg,
@@ -64,8 +67,7 @@ const Weather = () => {
         return;
       }
 
-      console.log(data);
-      console.log(weatherData);
+      // Update weather data
       const icons = weatherIcons[data.weather[0].icon] || clearImg;
       setWeatherData({
         humidity: data.main.humidity,
@@ -116,6 +118,8 @@ const Weather = () => {
       setWeatherData(false);
       console.log("error in fetching data");
     }
+
+    // Clear input field
     inputRef.current.value = "";
   };
 
@@ -124,51 +128,62 @@ const Weather = () => {
   }, []);
 
   return (
-    <div className="h-[30rem] w-[27rem] bg-gray-400 gap-3 p-5 relative rounded-2xl flex items-center justify-center flex-col overflow-hidden">
+    <div className="w-[19rem] h-[26rem] sm:w-[25rem] sm:h-[27rem] md:h-[30rem] md:w-[27rem]  gap-3 p-5 relative rounded-2xl flex items-center justify-center flex-col overflow-hidden">
       <img
         className="absolute w-full h-full object-cover"
         src={backgroundImage}
-        alt=""
+        alt="background image"
       />
       <div className="absolute inset-0 opacity-50 bg-black"></div>
       <div className="absolute flex flex-col items-center justify-center gap-3  ">
         <div className=" flex items-center justify-center gap-7">
           <input
             ref={inputRef}
-            className="outline-none p-3 rounded-full placeholder:text-center text-center"
+            className="text-sm md:text-base h-10 md:h-11 w-40 md:w-48 outline-none p-3 rounded-full placeholder:text-center text-center"
             type="text"
             placeholder="Search"
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                searchData(inputRef.current.value);
+              }
+            }}
           />
           <FiSearch
-            className="text-5xl bg-white rounded-full  p-3 cursor-pointer"
+            className="text-5xl bg-white rounded-full h-9 w-9 md:h-11 md:w-11 p-2 md:p-3 cursor-pointer"
             onClick={() => searchData(inputRef.current.value)}
           />
         </div>
         {weatherData ? (
           <>
             <img
-              className="h-36 w-36 "
+              className="h-32 w-32 sm:h-36 sm:w-36 "
               src={weatherData.icon}
               alt="weather image"
             />
             <div className="flex flex-col items-center justify-center text-white gap-3 w-full">
-              <h2 className="text-6xl flex text-center text-white">
+              <h2 className="text-4xl md:text-6xl flex text-center text-white">
                 {weatherData.temp}
                 <span className=" p-0">&deg;</span>c
               </h2>
-              <h1 className="font-bold text-xl">{weatherData.city}</h1>
+              <h1 className="font-bold text-base md:text-xl">
+                {weatherData.city}
+              </h1>
             </div>
             <div className="flex w-full p-3 justify-between text-white gap-16">
-              <div className="flex gap-3">
-                <img src={humidityImg} alt="humidity image" />
-                <div>
+              <div className="flex items-center">
+                <img
+                  className="w-16 h-16"
+                  src={humidityImg}
+                  alt="humidity image"
+                />
+                <div className="text-xs sm:text-base">
                   <h1>{weatherData.humidity}%</h1>
                   <h2>Humidity</h2>
                 </div>
               </div>
-              <div className="flex gap-3 text-white">
-                <img src={windImg} alt="wind image" />
-                <div>
+              <div className="flex gap-1 text-white items-center">
+                <img className="w-12 h-12" src={windImg} alt="wind image" />
+                <div className="text-xs sm:text-base">
                   <h1>{weatherData.wind} Km/h</h1>
                   <h2>Wind Speed</h2>
                 </div>
@@ -178,28 +193,32 @@ const Weather = () => {
         ) : (
           <>
             <img
-              className="h-36 w-36 "
+              className="h-32 w-32 sm:h-36 sm:w-36 "
               src={thunderStormImg}
               alt="weather image"
             />
             <div className="flex flex-col items-center justify-center text-white gap-3 w-full">
-              <h2 className="text-6xl flex text-center text-white">
+              <h2 className="text-4xl md:text-6xl flex text-center text-white">
                 32
                 <span className=" p-0">&deg;</span>c
               </h2>
-              <h1 className="font-bold text-xl">Karachi</h1>
+              <h1 className="font-bold text-base md:text-xl">Karachi</h1>
             </div>
             <div className="flex w-full p-3 justify-between text-white gap-16">
-              <div className="flex gap-3">
-                <img src={humidityImg} alt="humidity image" />
-                <div>
+              <div className="flex items-center">
+                <img
+                  className="w-16 h-16"
+                  src={humidityImg}
+                  alt="humidity image"
+                />
+                <div className="text-xs sm:text-base">
                   <h1>45%</h1>
                   <h2>Humidity</h2>
                 </div>
               </div>
-              <div className="flex gap-3 text-white">
-                <img src={windImg} alt="wind image" />
-                <div>
+              <div className="flex gap-1 text-white items-center">
+                <img className="w-12 h-12" src={windImg} alt="wind image" />
+                <div className="text-xs sm:text-base">
                   <h1>32 Km/h</h1>
                   <h2>Wind Speed</h2>
                 </div>
