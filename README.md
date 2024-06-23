@@ -45,8 +45,15 @@ Start the server
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Capture](https://github.com/Haider-Ali-HA/Weather-App/assets/112569777/d2eaadcc-758b-4366-8476-e6a6a31fc5e7)
 
+![Capture1](https://github.com/Haider-Ali-HA/Weather-App/assets/112569777/58fe706c-d75d-4586-8621-c982835d1a53)
+
+![Capture2](https://github.com/Haider-Ali-HA/Weather-App/assets/112569777/9bf3a887-025d-44f5-90ec-029945d00500)
+
+![Capture3](https://github.com/Haider-Ali-HA/Weather-App/assets/112569777/630d0abd-9365-4494-b0cf-0d5bf60aa1b2)
+
+![Capture4](https://github.com/Haider-Ali-HA/Weather-App/assets/112569777/4fcd0520-6d1d-4944-a364-93c918479ab8)
 
 ## Environment Variables
 
